@@ -2,14 +2,16 @@ const express = require("express");
 const CookieParser = require("cookie-parser");
 const app = express();
 const cors = require("cors");
+const morgan = require("morgan");
+app.use(morgan("dev"));
 
 /** Middelware used.. */
 
 app.use(express.json());
 app.use(CookieParser());
 app.use(cors({
+    origin: "http://localhost:5173",
     credentials: true,
-    origin: "https://web-dev-lyft.vercel.app"
 }))
 
 
