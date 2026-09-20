@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
 
+/**
+ * iska kaam hai identify karna ki req kis user ne ki hai ...
+ */
 async function identifyUser(req, res , next) {
-
+  
   const token = req.cookies.token;
 
   if (!token) {

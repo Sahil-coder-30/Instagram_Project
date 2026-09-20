@@ -9,10 +9,8 @@ const { toFile } = require("@imagekit/nodejs");
 const imagekit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATEKEY,
 });
- console.log("12 auth controller");
+
 async function authRegisterController(req, res) {
-   console.log("14 auth");
-   
   const { username, email, password, bio, fullName } = req.body;
 
   const isUserAlreadyExist = await userModel.findOne({
@@ -71,11 +69,9 @@ async function authRegisterController(req, res) {
     },
   });
 }
-console.log("70 auth controller");
+
 async function authLoginController(req, res) {
-    console.log("73 auth");
   const { username, email, password } = req.body;
-  console.log(req.body);
 
   const isUserExist = await userModel
     .findOne({
@@ -92,7 +88,7 @@ async function authLoginController(req, res) {
   const isPasswordCorect = await bcrypt.compare(password, isUserExist.password);
 
   if (!isPasswordCorect) {
-    return res.status(401).json({
+    return res.status(404).json({
       message: "incorrect password entered...",
     });
   }

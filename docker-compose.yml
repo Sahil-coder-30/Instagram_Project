@@ -1,0 +1,45 @@
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: insta_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: ./Backend/.env
+        required: false
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    networks:
+      - insta_network
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: insta_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    env_file:
+      - path: ./Frontend/.env
+        required: false
+    environment:
+      - VITE_SERVER=http://localhost:3000
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - insta_network
+
+networks:
+  insta_network:
+    driver: bridge
